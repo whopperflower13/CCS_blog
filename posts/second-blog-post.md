@@ -12,9 +12,11 @@ I'm Minami, a 2nd year student at RMIT.
 <br>
 Homework: Grids!
 
-I made a grid using "for loops". Initially I misunderstood the instructions, and increase the number of squares vertically, imitating a grid look. I did this with the help of ChatGPT. Unfortunately, I soon realized that this was not what was asked in the instruction, and went on to learn about lines and loops.
+I made a grid using "for loops". Initially I misunderstood the instructions, and increase the number of squares vertically, imitating a grid look. I did this with the help of ChatGPT. ![alt text](IMG_2244.PNG)
+
+Unfortunately, I soon realized that this was not what was asked in the instruction, and went on to learn about lines and loops.
 <br><br>
-My first attempt in using for loops for lines turned out like this: 
+My first attempt in using for loops for lines turned out like this: ![alt text](IMG_2246.PNG)
 <br>
 
 I derived the code from the previous attempt with the squares, which only required a single "square()" function to let squares appear in lines vertically and horizontally (on the x and y axis). However, this method did not work as the lines were drawn diagonally in one direction, instead of intersecting into a grid. <br>
@@ -22,6 +24,7 @@ I did some more research in the p5 library, and referenced the code from the squ
 Moreover, the lines required a different set of limits from squares, so I had multiple tries on getting the lines to start and end at the desired point. I ended up with the following sets of limits: <br>
 
 My final attempt turned out to be like this:
+![alt text](IMG_2247.PNG)
 
 Homework 2: Rafaël Rozendaal
 
