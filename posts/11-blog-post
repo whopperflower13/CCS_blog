@@ -13,6 +13,10 @@ Im soooo tired and hungry omggg
 <canvas id="p5_sample"></canvas>
 
 <script>
+const cnv = document.getElementById ("p5_sample")
+const w = cnv.parentNode.scrollWidth
+const h = w * 9 / 16
+
     function setup() {
   createCanvas(400, 400);
   noStroke ()
