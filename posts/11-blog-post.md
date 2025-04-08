@@ -43,4 +43,8 @@ function draw() {
   //   }
   // }
 }
+
+
 </script>
+
+ai images could be interpreted as non digital. 
