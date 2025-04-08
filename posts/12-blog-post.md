@@ -1,6 +1,6 @@
 ---
 title: Week 6-1 blog!
-published_at: 2025-04-03
+published_at: 2025-04-08
 snippet: Eleventh class blog. 
 disable_html_sanitization: true
 allow_math: true
