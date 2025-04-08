@@ -16,7 +16,7 @@ i like 3d so three.js is very exiting!
 			{
 				"imports": {
 					"three": "../scripts/three.module.js",
-					<!-- "three/addons/": "./jsm/" -->
+					console.log(three)
 				}
 			}
 		</script>
