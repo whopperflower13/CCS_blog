@@ -13,200 +13,180 @@ i like 3d so three.js is very exiting!
 <div id="three.js_container"></div>
 
 <script type="module">
-    import * as THREE from '../static/250408/three.js/build.module.js';
+    import * as THREE from '../static/250408/scripts/three.module.js';
 
-    const container = document.getElementById (`../static/250408/three.js_container`)
+    const container = document.getElementById (`../static/250408/scripts/three.js_container`)
     const width = container.parentNode.scrollWidth
     const height = width * 9 / 16
 
-    inport { GUI } from import { GUI } from '../static/250408/three/addons/libs/lil-gui.module.min.js';
+			import { OrbitControls } from '../static/250408/scripts/OrbitControls.js';
+			import { TeapotGeometry } from '../static/250408/scripts/TeapotGeometry.js';
 
-			import { OrbitControls } from '../static/250408/three/addons/controls/OrbitControls.js';
-			import { TeapotGeometry } from '../static/250408/three/addons/geometries/TeapotGeometry.js';
+			const teapotSize = 300
 
-			let camera, scene, renderer;
-			let cameraControls;
-			let effectController;
-			const teapotSize = 300;
-			let ambientLight, light;
+			let teapot
 
-			let tess = - 1;	// force initialization
-			let bBottom;
-			let bLid;
-			let bBody;
-			let bFitLid;
-			let bNonBlinn;
-			let shading;
+			const textureMap = new THREE.TextureLoader ()
+				.load ('../static/250408/textures/uv_grid_opengl.jpg')
+			textureMap.wrapS = textureMap.wrapT = THREE.RepeatWrapping
+			textureMap.anisotropy = 16
+			textureMap.colorSpace = THREE.SRGBColorSpace
 
-			let teapot, textureCube;
-			const materials = {};
+			// REFLECTION MAP
+			const path = '../static/250408/textures/pisa/'
+			const urls = [ 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' ]
+			const textureCube = new THREE.CubeTextureLoader().setPath( path ).load( urls )
 
-			init();
-			render();
+			const materials = {
+				wireframe: = new THREE.MeshBasicMaterial( { 
+					wireframe: true
+					} ),
+				flat: new THREE.MeshPhongMaterial( { 
+					specular: 0x000000, 
+					flatShading: true, 
+					side: THREE.DoubleSide 
+				} ),
+				smooth: new THREE.MeshLambertMaterial( { 
+					side: THREE.DoubleSide 
+				} ),
+				glossy: new THREE.MeshPhongMaterial( { 
+					color: 0xc0c0c0, 
+					specular: 0x404040, 
+					shininess: 300, 
+					side: THREE.DoubleSide 
+				} ),
+				textured: new THREE.MeshPhongMaterial( { 
+					map: textureMap, 
+					side: THREE.DoubleSide 
+				} ),
+				reflective: new THREE.MeshPhongMaterial( { 
+					envMap: textureCube, 
+					side: THREE.DoubleSide 
+				} ),
+			}
+			const rand_el = a => a[Math.floor (Math.random () * a.length)]
+			
+			const rand_tess = () => rand_el ([ 20, 30, 40, 50 ])
 
-			function init() {
 
-				const container = document.createElement( 'div' );
-				document.body.appendChild( container );
+			// CAMERA
+			const camera = new THREE.PerspectiveCamera( 45, width / height, 1, 80000 )
+			camera.position.set( - 600, 550, 1300 )
 
-				const canvasWidth = window.innerWidth;
-				const canvasHeight = window.innerHeight;
+			// LIGHTS
+			const ambientLight = new THREE.AmbientLight( 0x7c7c7c, 2.0 )
 
-				// CAMERA
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 80000 );
-				camera.position.set( - 600, 550, 1300 );
+			const light = new THREE.DirectionalLight( 0xFFFFFF, 2.0 )
+			light.position.set( 0.32, 0.39, 0.7 )
 
-				// LIGHTS
-				ambientLight = new THREE.AmbientLight( 0x7c7c7c, 2.0 );
+			// RENDERER
+			renderer = new THREE.WebGLRenderer( { antialias: true } )
+			renderer.setPixelRatio( window.devicePixelRatio )
+			renderer.setSize( width, height )
+			container.appendChild( renderer.domElement )
 
-				light = new THREE.DirectionalLight( 0xFFFFFF, 2.0 );
-				light.position.set( 0.32, 0.39, 0.7 );
+			// CONTROLS
+			const cameraControls = new OrbitControls( camera, renderer.domElement )
 
-				// RENDERER
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( canvasWidth, canvasHeight );
-				container.appendChild( renderer.domElement );
+			// scene itself
+			const scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0xAAAAAA );
+			scene.add( ambientLight );
+			scene.add( light );
 
-				// EVENTS
-				window.addEventListener( 'resize', onWindowResize );
+			let material = materials [ 'wireframe' ]
 
-				// CONTROLS
-				cameraControls = new OrbitControls( camera, renderer.domElement );
-				cameraControls.addEventListener( 'change', render );
+			const mutate_geometry = (g,p) => {
+				const length = g.index.array.length
+				const glitch_amount = Math.abs ((p * 2) - 1) ** 5 
+				//abstract and reverse to the power of 5??
+				const glitch_length = Math.floor (glitch_amount * length)
+				const glitch_location = Math.floor (
+					Math.random () * (length - glitch_length)
+				)
 
-				// TEXTURE MAP
-				const textureMap = new THREE.TextureLoader().load( 'textures/uv_grid_opengl.jpg' );
-				textureMap.wrapS = textureMap.wrapT = THREE.RepeatWrapping;
-				textureMap.anisotropy = 16;
-				textureMap.colorSpace = THREE.SRGBColorSpace;
+				const mutation = p >= 0.5
+					? () => Math.floor (Math.random () * 8192)
+					//2^13
+					: () => 0
 
-				// REFLECTION MAP
-				const path = 'textures/cube/pisa/';
-				const urls = [ 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' ];
+				const front = g.index.array.slice (0, glitch_location)
+				const middle = new Uint16Array (glitch_length)
+				.fill(0)
+				.map (mutation)
+				const back = g.index.array.slice (glitch_location + glitch_length)
 
-				textureCube = new THREE.CubeTextureLoader().setPath( path ).load( urls );
-
-				materials[ 'wireframe' ] = new THREE.MeshBasicMaterial( { wireframe: true } );
-				materials[ 'flat' ] = new THREE.MeshPhongMaterial( { specular: 0x000000, flatShading: true, side: THREE.DoubleSide } );
-				materials[ 'smooth' ] = new THREE.MeshLambertMaterial( { side: THREE.DoubleSide } );
-				materials[ 'glossy' ] = new THREE.MeshPhongMaterial( { color: 0xc0c0c0, specular: 0x404040, shininess: 300, side: THREE.DoubleSide } );
-				materials[ 'textured' ] = new THREE.MeshPhongMaterial( { map: textureMap, side: THREE.DoubleSide } );
-				materials[ 'reflective' ] = new THREE.MeshPhongMaterial( { envMap: textureCube, side: THREE.DoubleSide } );
-
-				// scene itself
-				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0xAAAAAA );
-
-				scene.add( ambientLight );
-				scene.add( light );
-
-				// GUI
-				setupGui();
+				const mutated = new Uint16Array (length)
+				mutated.set (front)
+				mutated.set (middle, front.length)
+				muted.set (back, front.length + middle.length)
+			
+				g.index.array = mutated
 
 			}
 
-			// EVENT HANDLERS
+			let next_glitch_time = 0
+			let is_glitching = false 
+			let geometry = new Teapot Geometry (
+				300, //teapotsize
+				rand_tess (),
+				true,
+				true,
+				true,
+				true,
+			)
 
-			function onWindowResize() {
+			const draw_teapot = ms => {
 
-				const canvasWidth = window.innerWidth;
-				const canvasHeight = window.innerHeight;
-
-				renderer.setSize( canvasWidth, canvasHeight );
-
-				camera.aspect = canvasWidth / canvasHeight;
-				camera.updateProjectionMatrix();
-
-				render();
-
-			}
-
-			function setupGui() {
-
-				effectController = {
-					newTess: 15,
-					bottom: true,
-					lid: true,
-					body: true,
-					fitLid: false,
-					nonblinn: false,
-					newShading: 'glossy'
-				};
-
-				const gui = new GUI();
-				gui.add( effectController, 'newTess', [ 2, 3, 4, 5, 6, 8, 10, 15, 20, 30, 40, 50 ] ).name( 'Tessellation Level' ).onChange( render );
-				gui.add( effectController, 'lid' ).name( 'display lid' ).onChange( render );
-				gui.add( effectController, 'body' ).name( 'display body' ).onChange( render );
-				gui.add( effectController, 'bottom' ).name( 'display bottom' ).onChange( render );
-				gui.add( effectController, 'fitLid' ).name( 'snug lid' ).onChange( render );
-				gui.add( effectController, 'nonblinn' ).name( 'original scale' ).onChange( render );
-				gui.add( effectController, 'newShading', [ 'wireframe', 'flat', 'smooth', 'glossy', 'textured', 'reflective' ] ).name( 'Shading' ).onChange( render );
-
-			}
-
-
-			//
-
-			function render() {
-
-				if ( effectController.newTess !== tess ||
-					effectController.bottom !== bBottom ||
-					effectController.lid !== bLid ||
-					effectController.body !== bBody ||
-					effectController.fitLid !== bFitLid ||
-					effectController.nonblinn !== bNonBlinn ||
-					effectController.newShading !== shading ) {
-
-					tess = effectController.newTess;
-					bBottom = effectController.bottom;
-					bLid = effectController.lid;
-					bBody = effectController.body;
-					bFitLid = effectController.fitLid;
-					bNonBlinn = effectController.nonblinn;
-					shading = effectController.newShading;
-
-					createNewTeapot();
-
+				if (teapot !== undefned){
+					teapot.geometry.dispose()
+					scene.remove (teapot)
 				}
 
-				// skybox is rendered separately, so that it is always behind the teapot.
-				if ( shading === 'reflective' ) {
+				const t = ms * 0.001
 
-					scene.background = textureCube;
+				if (t > next_glitch_time){
+					const period = Math.random () ** 24 * 6
+					next_glitch_time = t + period
 
-				} else {
+					is_glitching = !is_glitching
 
-					scene.background = null;
+					if (is_glitching) mutate_geometry (geometry, Math.random())
 
+					else {
+						geometry = new TeapotGeometry (
+						teapotSize,
+						rand_tess (), 
+						Math.random () < 0.8,
+						Math.random () < 0.8,
+						true,
+						true,
+						true 
+					)
+
+					const type = rand_el ([ 
+						`wireframe`, 
+						`flat`, 
+						`smooth`, 
+						`glossy`, 
+						`textured`, 
+						`reflective` 
+					])
+					material = materials[ type ]
+
+					scene.background = type === `reflective` 
+						? textureCube
+						: null
+						}
 				}
-
-				renderer.render( scene, camera );
-
 			}
+			  teapot = new THREE.Mesh (geometry, material)
+   scene.add (teapot)
 
-			// Whenever the teapot changes, the scene is rebuilt from scratch (not much to it).
-			function createNewTeapot() {
+   renderer.render (scene, camera)
 
-				if ( teapot !== undefined ) {
+   requestAnimationFrame (draw_teapot)
+}
 
-					teapot.geometry.dispose();
-					scene.remove( teapot );
-
-				}
-
-				const geometry = new TeapotGeometry( teapotSize,
-					tess,
-					effectController.bottom,
-					effectController.lid,
-					effectController.body,
-					effectController.fitLid,
-					! effectController.nonblinn );
-
-				teapot = new THREE.Mesh( geometry, materials[ shading ] );
-
-				scene.add( teapot );
-
-			}
-
+requestAnimationFrame (draw_teapot)
 		</script>
