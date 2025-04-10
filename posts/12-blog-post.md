@@ -179,7 +179,7 @@ i like 3d so three.js is very exiting!
 						: null
 						}
 				}
-			}
+			
 			  teapot = new THREE.Mesh (geometry, material)
    scene.add (teapot)
 
