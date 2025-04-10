@@ -15,7 +15,7 @@ i like 3d so three.js is very exiting!
 <script type="module">
     import * as THREE from '../static/250408/scripts/three.module.js';
 
-    const container = document.getElementById (`../static/250408/scripts/three.js_container`)
+    const container = document.getElementById (`three.js_container`)
     const width = container.parentNode.scrollWidth
     const height = width * 9 / 16
 
@@ -181,12 +181,12 @@ i like 3d so three.js is very exiting!
 				}
 			
 			  teapot = new THREE.Mesh (geometry, material)
-   scene.add (teapot)
+  			scene.add (teapot)
 
-   renderer.render (scene, camera)
+   			renderer.render (scene, camera)
 
-   requestAnimationFrame (draw_teapot)
-}
+  			 requestAnimationFrame (draw_teapot)
+			}
 
-requestAnimationFrame (draw_teapot)
+			requestAnimationFrame (draw_teapot)
 		</script>
