@@ -127,7 +127,7 @@ i like 3d so three.js is very exiting!
 
 			let next_glitch_time = 0
 			let is_glitching = false 
-			let geometry = new Teapot Geometry (
+			let geometry = new TeapotGeometry (
 				300, //teapotsize
 				rand_tess (),
 				true,
