@@ -13,32 +13,32 @@ i like 3d so three.js is very exiting!
 <div id="three.js_container"></div>
 
 <script type="module">
-    import * as THREE from '../static/250408/scripts/three.module.js';
+    import * as THREE from '/250408/scripts/three.module.js';
 
     const container = document.getElementById (`three.js_container`)
     const width = container.parentNode.scrollWidth
     const height = width * 9 / 16
 
-			import { OrbitControls } from '../static/250408/scripts/OrbitControls.js';
-			import { TeapotGeometry } from '../static/250408/scripts/TeapotGeometry.js';
+			import { OrbitControls } from '/250408/scripts/OrbitControls.js';
+			import { TeapotGeometry } from '/250408/scripts/TeapotGeometry.js';
 
 			const teapotSize = 300
 
 			let teapot
 
 			const textureMap = new THREE.TextureLoader ()
-				.load ('../static/250408/textures/uv_grid_opengl.jpg')
+				.load ('/250408/textures/uv_grid_opengl.jpg')
 			textureMap.wrapS = textureMap.wrapT = THREE.RepeatWrapping
 			textureMap.anisotropy = 16
 			textureMap.colorSpace = THREE.SRGBColorSpace
 
 			// REFLECTION MAP
-			const path = '../static/250408/textures/pisa/'
+			const path = '/250408/textures/pisa/'
 			const urls = [ 'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png' ]
 			const textureCube = new THREE.CubeTextureLoader().setPath( path ).load( urls )
 
 			const materials = {
-				wireframe: = new THREE.MeshBasicMaterial( { 
+				wireframe: new THREE.MeshBasicMaterial( { 
 					wireframe: true
 					} ),
 				flat: new THREE.MeshPhongMaterial( { 
@@ -80,7 +80,7 @@ i like 3d so three.js is very exiting!
 			light.position.set( 0.32, 0.39, 0.7 )
 
 			// RENDERER
-			renderer = new THREE.WebGLRenderer( { antialias: true } )
+			const renderer = new THREE.WebGLRenderer( { antialias: true } )
 			renderer.setPixelRatio( window.devicePixelRatio )
 			renderer.setSize( width, height )
 			container.appendChild( renderer.domElement )
