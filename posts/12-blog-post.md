@@ -13,16 +13,16 @@ i like 3d so three.js is very exiting!
 <div id="three.js_container"></div>
 
 <script type="module">
-    import * as THREE from './250408/three.js/build.module.js';
+    import * as THREE from '../static/250408/three.js/build.module.js';
 
-    const container = document.getElementById (`three.js_container`)
+    const container = document.getElementById (`../static/250408/three.js_container`)
     const width = container.parentNode.scrollWidth
     const height = width * 9 / 16
 
-    inport { GUI } from import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+    inport { GUI } from import { GUI } from '../static/250408/three/addons/libs/lil-gui.module.min.js';
 
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { TeapotGeometry } from 'three/addons/geometries/TeapotGeometry.js';
+			import { OrbitControls } from '../static/250408/three/addons/controls/OrbitControls.js';
+			import { TeapotGeometry } from '../static/250408/three/addons/geometries/TeapotGeometry.js';
 
 			let camera, scene, renderer;
 			let cameraControls;
