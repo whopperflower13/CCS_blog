@@ -13,7 +13,7 @@ i like 3d so three.js is very exiting!
 <div id="three.js_container"></div>
 
 <script type="module">
-    import * as THREE from https://cdn.jsdelivr.net/npm/three@0.175.0/+esm
+    import three from https://cdn.jsdelivr.net/npm/three@0.175.0/+esm
 
     const container = document.getElementById (`three.js_container`)
     const width = container.parentNode.scrollWidth
