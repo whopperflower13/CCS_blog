@@ -7,7 +7,9 @@ allow_math: true
 ---
 
 <script type="module">
-    import * as THREE from '/250408/scripts/three.module.js'
+    import three from https://cdn.jsdelivr.net/npm/three@0.175.0/+esm
+
+    
     const x = 0, y = 0;
 
 const heartShape = new THREE.Shape();
