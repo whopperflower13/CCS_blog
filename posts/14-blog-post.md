@@ -5,6 +5,9 @@ snippet: Thirteenth class blog.
 disable_html_sanitization: true
 allow_math: true
 ---
+I learned moire when I was drawing comics in elementary school. The traditional way of drawing manga were with pen and paper, and the shades expressed in screen tones. Screen tones are sticker sheets with patterns, attached to the page to express patterns, shadows, gradients, and color. I learned to unite the density of the tones to avoid the moire effect, a result of combining multiple tones of different densities. Since this was taught to be avoided, I had a overall negative impression toward moire. 
+
+![alt text](moire.png)
 
 <script type="module">
     import three from https://cdn.jsdelivr.net/npm/three@0.175.0/+esm
