@@ -5,4 +5,6 @@ snippet: learning three.js
 disable_html_sanitization: true
 allow_math: true
 ---
+
+hello
 <script type="module" src="/static/threejs/threejs.js"></script>
