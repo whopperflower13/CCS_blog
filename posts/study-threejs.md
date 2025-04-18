@@ -23,3 +23,7 @@ allow_math: true
     height: 100vh;
   }
 </style>
+
+<script type="module">
+  import * as THREE from "three";
+  </script>
