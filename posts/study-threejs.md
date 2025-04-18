@@ -6,6 +6,10 @@ disable_html_sanitization: true
 allow_math: true
 ---
 
+<script>
+  alert('Scripts are working!');
+</script>
+
 <script type="importmap">
   {
     "imports": {
