@@ -1,6 +1,7 @@
 {
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.1.0/",
+    "$fresh_mdx": "https://deno.land/x/fresh_mdx@0.1.4/mod.ts",
     "preact": "https://esm.sh/preact@10.10.6",
     "preact/": "https://esm.sh/preact@10.10.6/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.3/",
@@ -12,6 +13,8 @@
     "@/": "./",
     "./": "./",
     "$gfm": "jsr:@deno/gfm",
-    "feed": "https://esm.sh/feed@4.2.2"
+    "feed": "https://esm.sh/feed@4.2.2",
+    "three": "https://esm.sh/three@0.160.0"
   }
 }
+
