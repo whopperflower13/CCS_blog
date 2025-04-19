@@ -7,6 +7,4 @@ allow_math: true
 ---
 
 hello
-<div id="three-canvas"></div>
-<script type="module" src="/static/threejs/threejs.js"></script>
-
+<ThreeCanvas />
