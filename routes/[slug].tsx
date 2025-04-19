@@ -2,7 +2,6 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { getPost, Post } from "@/utils/posts.ts";
 import { CSS, KATEX_CSS, render } from "$gfm";
-import { Markdown } from "$fresh_markdown";
 import { ThreeCanvas } from "../islands/ThreeCanvas.tsx";
 
 
@@ -41,6 +40,13 @@ export default function PostPage(props: PageProps<Post>) {
             allowMath: post.allowMath,
           }) }}
         />
+        {/* 👇 slugが"study-threejs"のときだけThreeCanvas表示 */}
+        {props.route.startsWith("/posts/study-threejs") && (
+          <section class="mt-16">
+            <h2 class="text-2xl font-semibold mb-4">Three.js Canvas</h2>
+            <ThreeCanvas />
+          </section>
+        )}
       </main>
     </>
   );
