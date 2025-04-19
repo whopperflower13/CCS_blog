@@ -1,8 +1,8 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
-import { h } from "https://esm.sh/preact@10.15.1";
-import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks";
-import * as THREE from "https://esm.sh/three@0.160.0";
+import { h } from "https://esm.sh/preact@10.15.1?dts";
+import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks?dts";
+import * as THREE from "https://esm.sh/three@0.160.0?dts";
 
 export default function ThreeCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
