@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 /** @jsx h */
 /** @jsxFrag Fragment */
 import { h } from "https://esm.sh/preact@10.15.1?dts";
 import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks?dts";
 import * as THREE from "https://esm.sh/three@0.160.0?dts";
+=======
+// islands/ThreeCanvas.tsx
+import { useEffect, useRef } from "preact/hooks";
+import * as THREE from "https://cdn.skypack.dev/three";
+>>>>>>> parent of 1336ab9 (aaaaa)
 
 export default function ThreeCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
