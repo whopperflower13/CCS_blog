@@ -152,9 +152,6 @@
       "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
     }
   },
-  "redirects": {
-    "https://esm.sh/@types/three@~0.160.0/index.d.ts": "https://esm.sh/@types/three@0.160.0/index.d.ts"
-  },
   "remote": {
     "https://deno.land/std@0.140.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
     "https://deno.land/std@0.140.0/_util/os.ts": "3b4c6e27febd119d36a416d7a97bd3b0251b77c88942c8f16ee5953ea13e2e49",
@@ -294,14 +291,6 @@
     "https://esm.sh/preact@10.10.6/denonext/preact.mjs": "faed151e239af5a78b535bbef420f14da067eee75418f2dff3443d7649e879e5",
     "https://esm.sh/preact@10.10.6/hooks": "b23d94f310037e83656d9fbffce564c9af398ac3020be1e2b404ca98ddfb72e5",
     "https://esm.sh/preact@10.10.6/jsx-runtime": "2463127d183ef10113aa4de19dd6eca1a60d7a91d226cad7581f2485589c6e05",
-    "https://esm.sh/preact@10.15.1": "9e1d198acbadbb690508d863692cd0d6991e273911651aa738a87f37d91403af",
-    "https://esm.sh/preact@10.15.1/denonext/hooks.mjs": "4163e2bda58db3c4b177064a9a6d8d800d346ea4ce0ebf2844c7a2802afef00e",
-    "https://esm.sh/preact@10.15.1/denonext/jsx-runtime.mjs": "e88da38f30b0e0ca9c1bd4199b5a899c5923f635fd19a2906a7da1584da6db46",
-    "https://esm.sh/preact@10.15.1/denonext/preact.mjs": "1b48be13bc92da57070a420d1cf221c6ab9b532e94b14e12b3f5a5505faccc69",
-    "https://esm.sh/preact@10.15.1/hooks": "e877a4e73f1dff4917a241517207d177f1951686f46d30aaba6b4ad0325da793",
-    "https://esm.sh/preact@10.15.1/jsx-runtime": "26457cd330079695fa910d32ac372dba5aa6fae3b9ca251184da9fff44c445eb",
-    "https://esm.sh/three@0.160.0": "b3dc7e5aa477a3285f9b1b46a6aa67a90fd5d3eb0693474b0332d3d26bd6e69e",
-    "https://esm.sh/three@0.160.0/denonext/three.mjs": "41772aa704465c25fa940d6df6930268b0867b1a39bb0153f29d48cea65d64b4",
     "https://esm.sh/twind@0.16.17": "e9d05cb1e7a4ccb5b44c4409415bc02c26822a548c7ac8c2f227c11fcb124c89",
     "https://esm.sh/twind@0.16.17/sheets": "31cc03d2acccf29b80d22712026be08667f61a853ba03bb32842ffb1a0e61c12",
     "https://esm.sh/v135/feed@4.2.2/denonext/feed.mjs": "d6dc8357b3e9474bb21a6b339b9c1d311ce389c5971be2235945d267563a6dc3",
