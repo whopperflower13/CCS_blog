@@ -2,6 +2,9 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { getPost, Post } from "@/utils/posts.ts";
 import { CSS, KATEX_CSS, render } from "$gfm";
+import { Markdown } from "$fresh_markdown";
+import { ThreeCanvas } from "../islands/ThreeCanvas.tsx";
+
 
 export const handler: Handlers<Post> = {
   async GET(_req, ctx) {
