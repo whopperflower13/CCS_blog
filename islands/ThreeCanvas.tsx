@@ -2,7 +2,7 @@
 <<<<<<< HEAD
 import { h } from "https://esm.sh/preact@10.15.1?dts";
 import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks?dts";
-import * as THREE from "https://esm.sh/three@0.160.0?dts";
+import * as THREE from "https://esm.sh/three@0.150.1";
 =======
 // islands/ThreeCanvas.tsx
 import { useEffect, useRef } from "preact/hooks";
@@ -11,7 +11,7 @@ import * as THREE from "https://esm.sh/three@0.150.1";
 =======
 import { h } from "https://esm.sh/preact@10.15.1";
 import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks";
-import * as THREE from "https://esm.sh/three@0.160.0";
+import * as THREE from "https://esm.sh/three@0.150.1";
 >>>>>>> parent of 81f0ca4 (aaaaaaaaa)
 
 export default function ThreeCanvas() {
