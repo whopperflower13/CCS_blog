@@ -1,7 +1,7 @@
 import * as THREE from "https://esm.sh/three@0.150.1";
 
 // 描画先のdivを指定
-const container = document.getElementById("container");
+const container = document.getElementById("three-canvas");
 if (!container) {
   console.error("描画先の #three-canvas が見つかりません");
 } else {
