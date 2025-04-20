@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.skypack.dev/three';
+import * as THREE from "https://esm.sh/three@0.150.1";
 
 // 描画先のdivを指定
 const container = document.getElementById("container");
