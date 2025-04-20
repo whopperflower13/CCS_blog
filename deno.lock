@@ -311,6 +311,8 @@
     "https://esm.sh/sax@1.4.1?target=denonext": "e27842cb4e8dc59720f1f3df21075f69ddeb0b5c06bb055efcd72d1d59fefd79",
     "https://esm.sh/style-vendorizer@2.2.3/denonext/style-vendorizer.mjs": "5201bd4a17899690af07a1f1d1de8504fb6ed401e3bd7fca4ce76598c2b3f4e6",
     "https://esm.sh/style-vendorizer@2.2.3?target=denonext": "046aa4bfbc2f2f1d624d74bde1b7d2227a5d9a00122725b711768554999fc3eb",
+    "https://esm.sh/three@0.150.1": "16864c4d4113c7c2503f1553a024cc4822d41f3dfd42d8f918604704ef961ed1",
+    "https://esm.sh/three@0.150.1/denonext/three.mjs": "cab87a3528c9251ff0316f5f1d634cea0b76ffca40bdf7ed70edb297142f398e",
     "https://esm.sh/three@0.160.0": "b3dc7e5aa477a3285f9b1b46a6aa67a90fd5d3eb0693474b0332d3d26bd6e69e",
     "https://esm.sh/three@0.160.0/denonext/three.mjs": "41772aa704465c25fa940d6df6930268b0867b1a39bb0153f29d48cea65d64b4",
     "https://esm.sh/three@0.160.0?dts": "b3dc7e5aa477a3285f9b1b46a6aa67a90fd5d3eb0693474b0332d3d26bd6e69e",
