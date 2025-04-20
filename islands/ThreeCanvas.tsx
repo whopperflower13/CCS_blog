@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-/** @jsx h */
-/** @jsxFrag Fragment */
+
 <<<<<<< HEAD
 import { h } from "https://esm.sh/preact@10.15.1?dts";
 import { useEffect, useRef } from "https://esm.sh/preact@10.15.1/hooks?dts";
