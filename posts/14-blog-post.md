@@ -10,7 +10,7 @@ I learned moire when I was drawing comics in elementary school. The traditional 
 ![alt text](moire.png)
 
 <script type="module">
-    import three from https://cdn.jsdelivr.net/npm/three@0.175.0/+esm
+    import * as THREE from "https://esm.sh/three@0.150.1";
 
     
     const x = 0, y = 0;
