@@ -17,6 +17,10 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
+const geometry2 = new THREE.BoxGeometry(2, 2, 2);
+const cube2 = new THREE.Mesh(geometry2, material);
+scene.add(cube2);
+
 camera.position.z = 5;
 
 function animate() {
