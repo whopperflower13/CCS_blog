@@ -1,5 +1,5 @@
 import * as THREE from "https://esm.sh/three@0.150.1";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
 console.log(THREE)
 
 //textures
