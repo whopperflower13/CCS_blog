@@ -27,7 +27,7 @@ const loadingManager = new THREE.LoadingManager()
 // }
 
 const textureLoader = new THREE.TextureLoader(loadingManager)
-const colorTexture = textureLoader.load('asm2/textures/checkerboard-1024x1024.png')
+const colorTexture = textureLoader.load('./textures/checkerboard-1024x1024.png')
 // colorTexture.colorSpace = THREE.SRGBColorSpace
 // const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
 // alphaTexture.colorSpace = THREE.SRGBColorSpace
