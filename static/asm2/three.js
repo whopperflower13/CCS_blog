@@ -1,6 +1,7 @@
 import * as THREE from "https://esm.sh/three@0.150.1";
 import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
 console.log(THREE)
+console.log(OrbitControls)
 
 //textures
 const loadingManager = new THREE.LoadingManager()
@@ -26,7 +27,7 @@ const loadingManager = new THREE.LoadingManager()
 // }
 
 const textureLoader = new THREE.TextureLoader(loadingManager)
-const colorTexture = textureLoader.load('/textures/checkerboard-1024x1024.png')
+const colorTexture = textureLoader.load('asm2/textures/checkerboard-1024x1024.png')
 // colorTexture.colorSpace = THREE.SRGBColorSpace
 // const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
 // alphaTexture.colorSpace = THREE.SRGBColorSpace
@@ -77,20 +78,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
 
 /**
  * Camera
@@ -135,3 +123,18 @@ const tick = () =>
 }
 
 tick()
+
+window.addEventListener('resize', () =>
+{
+    // Update sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
+
+    // Update camera
+    camera.aspect = sizes.width / sizes.height
+    camera.updateProjectionMatrix()
+
+    // Update renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
