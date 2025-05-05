@@ -11,7 +11,7 @@ const gui = new GUI({
     closeFolders: false   
 })
 //gui.close()
-gui.hide()
+// gui.hide()
 
 const debugObject = {}
 
