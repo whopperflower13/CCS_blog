@@ -138,7 +138,7 @@ const sizes = {
 /**
  * Object2
  */
-const geometry2 = new THREE.SphereGeometry(1, 1, 3)
+const geometry2 = new THREE.SphereGeometry(3, 32, 16)
 const material2 = new THREE.MeshBasicMaterial({ map: colorTexture})
 const mesh2 = new THREE.Mesh(geometry2, material2)
 scene.add(mesh2)
