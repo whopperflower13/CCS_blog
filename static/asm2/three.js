@@ -81,7 +81,7 @@ const scene = new THREE.Scene()
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+
 
 
 debugObject.color = '#94ffd1'
@@ -137,10 +137,16 @@ const sizes = {
 /**
  * Object2
  */
-const geometry2 = new THREE.SphereGeometry(3, 32, 16)
-const material2 = new THREE.MeshBasicMaterial({ map: colorTexture})
-const mesh2 = new THREE.Mesh(geometry2, material2)
-scene.add(mesh2)
+const material2 = new THREE.MeshBasicMaterial()
+material2.map = colorTexture
+material2.side = THREE.DoubleSide
+
+const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 32, 16),
+     material2
+)
+
+scene.add(mesh, sphere)
 
 
 /**
