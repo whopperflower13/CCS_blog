@@ -1,7 +1,20 @@
 import * as THREE from "https://esm.sh/three@0.150.1";
 import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
-console.log(THREE)
-console.log(OrbitControls)
+import gsap from 'https://esm.sh/gsap@3.12.5'
+import GUI from 'https://esm.sh/lil-gui@0.18.2'
+
+//debug
+const gui = new GUI({
+    width: 300,
+    title: 'cool gui',
+    closeFolders: false   
+})
+//gui.close()
+gui.hide()
+
+const debugObject = {}
+
+
 
 //textures
 const loadingManager = new THREE.LoadingManager()
@@ -63,12 +76,56 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Object
+ * Object 1
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
+
+
+debugObject.color = '#94ffd1'
+
+
+const cubeTweaks = gui.addFolder('croissant')
+// cubeTweaks.close()
+
+cubeTweaks
+    .add(mesh.position, 'y')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name('elevation')
+
+cubeTweaks
+    .add(mesh, 'visible')
+
+cubeTweaks
+    .add(material, 'wireframe')
+
+
+cubeTweaks
+    .addColor(debugObject, 'color')
+    .onChange(() =>
+    {
+        material.color.set(debugObject.color)
+    })
+
+
+debugObject.subdivision = 2
+cubeTweaks
+    .add(debugObject, 'subdivision')
+    .min(1)
+    .max(20)
+    .step(1)
+    .onFinishChange(() =>
+    {
+        mesh.geometry.dispose()
+        mesh.geometry = new THREE.BoxGeometry(
+            1, 1, 1, 
+            debugObject.subdivision, debugObject.subdivision, debugObject.subdivision
+        )
+    })
 
 /**
  * Sizes
@@ -78,6 +135,13 @@ const sizes = {
     height: window.innerHeight
 }
 
+/**
+ * Object2
+ */
+const geometry2 = new THREE.SphereGeometry(1, 1, 3)
+const material2 = new THREE.MeshBasicMaterial({ map: colorTexture})
+const mesh2 = new THREE.Mesh(geometry2, material2)
+scene.add(mesh2)
 
 
 /**
