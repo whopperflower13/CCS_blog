@@ -1,4 +1,3 @@
-import './style.css'
 import * as THREE from "https://esm.sh/three@0.150.1"
 import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
 import gsap from 'https://esm.sh/gsap@3.12.5'
