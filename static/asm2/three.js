@@ -82,6 +82,13 @@ const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ map: colorTexture})
 const mesh = new THREE.Mesh(geometry, material)
 
+//meshmatcapmaterial 3 5
+//create my own matcaps
+
+//meshphongmaterial specular 0x1188ff
+// const material = new THREE.MeshPhongMaterial()
+// material. shininess = 45
+// material.specular = new THREE.Color(0x1188ff)
 
 
 debugObject.color = '#94ffd1'
@@ -184,7 +191,7 @@ const tick = () =>
 
      //Update objects (rotation)
      mesh.rotation.y = 0.1 * elapsedTime
-     mesh2.rotation.y = 0.1 * elapsedTime
+     sphere.rotation.y = 0.1 * elapsedTime
 
     // Update controls
     controls.update()
