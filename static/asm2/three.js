@@ -194,6 +194,10 @@ window.addEventListener('resize', () =>
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
 
+    //Update objects (rotation)
+    mesh.rotation.y = 0.1 * elapsedTime
+    mesh2.rotation.y = 0.1 * elapsedTime
+
     // Update camera
     camera.aspect = sizes.width / sizes.height
     camera.updateProjectionMatrix()
