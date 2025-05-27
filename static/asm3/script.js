@@ -14,11 +14,14 @@ webglRenderer.setSize(window.innerWidth, window.innerHeight);
 webglRenderer.domElement.style.position = "absolute";
 webglRenderer.domElement.style.top = "0";
 document.body.appendChild(webglRenderer.domElement);
+webglRenderer.domElement.className = "webgl-canvas";
 
 //CSS3DRenderer
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(cssRenderer.domElement);
+cssRenderer.domElement.className = "css3d-canvas";
+
 
 // Controls
 const controls = new OrbitControls(camera, webglRenderer.domElement)
@@ -43,6 +46,7 @@ const cssObject = new CSS3DObject(wrapper);
 cssObject.position.set(200, -150, 0)
 // cssObject.rotation.y = Math.PI / 4; // Example rotation
 scene.add(cssObject);
+
 
 //group
 const group = new THREE.Group();
@@ -95,5 +99,16 @@ const tick = () =>
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
+
+// Handle window resize
+        window.addEventListener('resize', () => {
+            // Update camera aspect ratio
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            // Update renderer sizes
+            webglRenderer.setSize(window.innerWidth, window.innerHeight);
+            cssRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
 tick()
