@@ -11,6 +11,11 @@ const renderer = new CSS3DRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
+controls.enableZoom = false
+
 // Create iframe element
 const iframe = document.createElement('iframe');
 iframe.src = "https://whopperflower13.github.io/ggsite/"; // Your desired website
@@ -23,4 +28,27 @@ cssObject.position.set(0, 0, 0);
 // cssObject.rotation.y = Math.PI / 4; // Example rotation
 scene.add(cssObject);
 
-renderer.render(scene, camera);
+/**
+ * Animate
+ */
+const clock = new THREE.Clock()
+
+const tick = () =>
+{
+    const elapsedTime = clock.getElapsedTime()
+
+     //Update objects (rotation)
+     cssObject.rotation.y = 0.1 * elapsedTime
+    
+
+    // Update controls
+    controls.update()
+
+    // Render
+    renderer.render(scene, camera)
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+
+tick()
