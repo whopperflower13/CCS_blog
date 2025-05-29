@@ -25,7 +25,7 @@ export default function LandingPage() {
           
           {/* Call to Action Button */}
           <a
-            href="/blog" // This links to your new blog index page
+            href="./blog" // This links to your new blog index page
             class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-md transition-colors duration-300 transform hover:scale-105 animate-bounce-in"
           >
             Explore the Blog
