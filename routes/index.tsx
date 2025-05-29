@@ -1,6 +1,6 @@
 // routes/index.tsx (Your new landing page)
 
-/** @jsx h */
+
 import { h } from "preact"; // Import h from preact for JSX
 import { Head } from "$fresh/runtime.ts"; // For adding meta tags to the HTML head
 
