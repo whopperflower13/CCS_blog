@@ -28,6 +28,14 @@ const controls = new OrbitControls(camera, webglRenderer.domElement)
 controls.enableDamping = true
 controls.enableZoom = false
 
+//disable panning
+controls.enablePan = false;
+controls.mouseButtons = {
+    LEFT: THREE.MOUSE.ROTATE,    // Left button for rotation (default)
+    MIDDLE: THREE.MOUSE.DOLLY,   // Middle button for zoom/dolly (default)
+    RIGHT: THREE.MOUSE.ROTATE    // Right button for rotation
+};
+
 // Create iframe element
 const iframe = document.createElement('iframe');
 iframe.src = "https://whopperflower13.github.io/ggsite/"; // Your desired website
@@ -73,7 +81,7 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
      //Update objects (rotation)
-     group.rotation.y = 0.1 * elapsedTime
+    //  group.rotation.y = 0.1 * elapsedTime
     
 
     // Update controls

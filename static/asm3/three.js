@@ -38,7 +38,7 @@ const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.Doub
 const plane = new THREE.Mesh( geometry, material );
 scene.add( plane )
 
-// 例：iframeをCSS3DObjectとして追加
+// add iframed website as a css3dobject
 const iframe = document.createElement('iframe');
 iframe.src = './screen.html';
 iframe.style.width = '800px';
@@ -71,24 +71,33 @@ scene.add(camera)
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
+//disable panning
+controls.enablePan = false;
+
+controls.mouseButtons = {
+    LEFT: THREE.MOUSE.ROTATE,    // Left button for rotation (default)
+    MIDDLE: THREE.MOUSE.DOLLY,   // Middle button for zoom/dolly (default)
+    RIGHT: THREE.MOUSE.ROTATE    // Right button for rotation
+};
+
 // Renderer
 // const renderer = new THREE.WebGLRenderer({
 //     canvas: canvas
 // })
 // renderer.setSize(sizes.width, sizes.height)
 
-// WebGL Renderer（3Dオブジェクト用）
+// WebGL Renderer (for 3d object)
 const webGLRenderer = new THREE.WebGLRenderer({ alpha: true });
 webGLRenderer.setSize(window.innerWidth, window.innerHeight);
 webGLRenderer.domElement.style.position = 'absolute';
 
-// CSS3D Renderer（iframeやHTML用）
+// CSS3D Renderer（for iframe and html）
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize(window.innerWidth, window.innerHeight);
 cssRenderer.domElement.style.position = 'absolute';
 cssRenderer.domElement.style.top = '0';
 
-// DOMへ両方追加
+// add both to the domelement
 const container = document.getElementById('container');
 container.appendChild(webGLRenderer.domElement);
 container.appendChild(cssRenderer.domElement);
