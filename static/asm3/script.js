@@ -11,7 +11,31 @@ camera.position.set(0, 0, 1000)
 
 //Models
 const gltfLoader = new GLTFLoader()
-console.log(gltfLoader)
+
+gltfLoader.load(
+    'phone_open.glb',
+    (gltf) =>
+    {
+        console.log(gltf)
+    }
+) 
+
+let foundMesh = null;
+scene.traverse(function (object) {
+    if (object.isMesh) { // `isMesh` is a property of THREE.Mesh objects
+        // This object is a mesh! You can do something with it.
+        // For example, if you know its name:
+        // if (object.name === "mySpecificMeshName") {
+        //     foundMesh = object;
+        // }
+        // Or just log all meshes:
+        console.log("Found mesh:", object.name, object);
+    }
+});
+
+if (foundMesh) {
+    console.log("My specific mesh is:", foundMesh);
+}
 
 
 //WEBGLRenderer
