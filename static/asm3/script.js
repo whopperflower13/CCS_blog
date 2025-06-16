@@ -1,13 +1,23 @@
 import * as THREE from "https://esm.sh/three@0.150.1"
 import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
 import { CSS3DRenderer, CSS3DObject } from "https://esm.sh/three@0.150.1/examples/jsm/renderers/CSS3DRenderer.js"
-import { GLTFLoader } from 'https://esm.sh/three@0.150.1/examples/jsm/loaders/GLTFLoader.js' // GLTFLoader now also from 0.150.1
-import gsap from 'https://esm.sh/gsap@3.12.5' // gsap can remain separate as it's not a Three.js module
+import { GLTFLoader } from 'https://esm.sh/three@0.150.1/examples/jsm/loaders/GLTFLoader.js' 
+import gsap from 'https://esm.sh/gsap@3.12.5'
 
 //Scene
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 1, 1000)
-camera.position.set(0, 0, 1000)
+camera.position.set(0, 0, 5)
+
+//Lights
+// Ambient Light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft white light
+scene.add(ambientLight);
+
+// Directional Light 
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // White light
+directionalLight.position.set(1, 1, 1).normalize(); // Position it to shine from a direction
+scene.add(directionalLight);
 
 //Models
 const gltfLoader = new GLTFLoader()
@@ -15,27 +25,25 @@ const gltfLoader = new GLTFLoader()
 gltfLoader.load(
     'phone_open.glb',
     (gltf) =>
-    {
-        console.log(gltf)
-    }
+{
+    console.log("gltf model loaded", gltf)
+    scene.add(gltf.scene)
+}
+        // console.log(gltf)
+        // scene.add(gltf.scene.children[0].children[0])
 ) 
 
-let foundMesh = null;
-scene.traverse(function (object) {
-    if (object.isMesh) { // `isMesh` is a property of THREE.Mesh objects
-        // This object is a mesh! You can do something with it.
-        // For example, if you know its name:
-        // if (object.name === "mySpecificMeshName") {
-        //     foundMesh = object;
-        // }
-        // Or just log all meshes:
-        console.log("Found mesh:", object.name, object);
-    }
-});
 
-if (foundMesh) {
-    console.log("My specific mesh is:", foundMesh);
-}
+
+
+// let foundMesh = null;
+// scene.traverse(function (object) {
+//     console.log("Traversing object:", object.name, object);
+// });
+
+// if (foundMesh) {
+//     console.log("My specific mesh is:", foundMesh);
+// }
 
 
 //WEBGLRenderer
@@ -56,7 +64,7 @@ cssRenderer.domElement.className = "css3d-canvas"
 // Controls
 const controls = new OrbitControls(camera, webglRenderer.domElement)
 controls.enableDamping = true
-controls.enableZoom = false
+// controls.enableZoom = false
 
 //disable panning
 controls.enablePan = false
@@ -68,7 +76,7 @@ controls.mouseButtons = {
 
 // Create iframe element
 const iframe = document.createElement('iframe')
-iframe.src = "https://whopperflower13.github.io/ggsite/" // Your desired website
+// iframe.src = "https://whopperflower13.github.io/ggsite/" // Your desired website
 iframe.style.width = "800px"
 iframe.style.height = "600px"
 iframe.style.border = "0"
@@ -92,10 +100,10 @@ const group = new THREE.Group()
 group.add(cssObject)
 
 // cube
-const geometry = new THREE.BoxGeometry(800, 600, 10)
-const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true })
-const cube = new THREE.Mesh(geometry, material)
-group.add(cube)
+// const geometry = new THREE.BoxGeometry(800, 600, 10)
+// const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true })
+// const cube = new THREE.Mesh(geometry, material)
+// group.add(cube)
 
 // 3. Add the group to the scene
 scene.add(group)
@@ -150,3 +158,5 @@ const tick = () =>
         })
 
 tick()
+
+
