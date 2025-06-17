@@ -5,43 +5,50 @@ import { CSS3DRenderer, CSS3DObject } from "https://esm.sh/three@0.150.1/example
 import { GLTFLoader } from 'https://esm.sh/three@0.150.1/examples/jsm/loaders/GLTFLoader.js' 
 import gsap from 'https://esm.sh/gsap@3.12.5'
 
+//Global Variables 
+const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+
 //Scene
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 1, 1000)
 camera.position.set(0, 0, 200)
 
 //Lights
-// Ambient Light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2); // Soft white light
 scene.add(ambientLight);
 
-// Directional Light 
+
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8); // White light
 directionalLight.position.set(1, 1, 1).normalize(); // Position it to shine from a direction
 scene.add(directionalLight);
 
+// Model placeholders
+let closedPhoneModel = null;
+let openPhoneModel = null;
+let currentPhoneGLTF = null; // To keep track of which GLTF is in the scene
+
+// State management
+let currentPhoneMode = 'closed'; // 'closed' or 'open'
+const body = document.body; // Get body reference for class toggling
+
+
 //Models
 const gltfLoader = new GLTFLoader()
 
-gltfLoader.load(
-    'phone_open.glb',
-    (gltf) =>
-{
-    console.log("gltf model loaded", gltf)
-    scene.add(gltf.scene)
-    //scale model
-    gltf.scene.scale.set(100, 100, 100)
+// gltfLoader.load(
+//     'phone_open.glb',
+//     (gltf) =>
+// {
+//     console.log("gltf model loaded", gltf)
+//     scene.add(gltf.scene)
+//     //scale model
+//     gltf.scene.scale.set(100, 100, 100)
 
-    // 1. Calculate the bounding box of the model
-    const box = new Box3().setFromObject(model);
-
-    // 2. Get the center of the bounding box
-    const center = new Vector3();
-    box.getCenter(center);
-
-}
-) 
-
+// }
+// ) 
 
 
 // let foundMesh = null;
@@ -94,21 +101,22 @@ const wrapper = document.createElement("div");
 wrapper.style.width = "800px"
 wrapper.style.height = "600px"
 wrapper.style.pointerEvents = "auto" // default
+wrapper.style.display = "none"
 wrapper.appendChild(iframe)
 
 const cssObject = new CSS3DObject(wrapper)
-cssObject.position.set(65, 19, 25)
+cssObject.position.set(22.5, 19, 2)
 // cssObject.rotation.y = Math.PI / 4; // Example rotation
 
 //scale down 
 cssObject.scale.set(0.15, 0.15, 0.15)
 
-scene.add(cssObject)
+// scene.add(cssObject)
 
 //group
-const group = new THREE.Group()
+// const group = new THREE.Group()
 
-group.add(cssObject)
+// group.add(cssObject)
 
 // cube
 // const geometry = new THREE.BoxGeometry(800, 600, 10)
@@ -117,57 +125,235 @@ group.add(cssObject)
 // group.add(cube)
 
 // 3. Add the group to the scene
-scene.add(group)
+// scene.add(group)
+
+// Group for model and cssObject
+const phoneGroup = new THREE.Group(); // Use a descriptive name
+phoneGroup.add(cssObject); // Add cssObject to the group
+scene.add(phoneGroup); // Add the group to the scene
+
+// --- Functions ---
+
+/**
+ * Loads a GLTF model and calls a callback with the loaded scene.
+ * @param {string} path The path to the GLTF model.
+ * @param {function} callback Function to call with the loaded GLTF scene.
+ */
+function loadGLTFModel(path, callback) {
+    gltfLoader.load(
+        path,
+        (gltf) => {
+            // Apply scale or other initial transformations here if needed for specific models
+            gltf.scene.scale.set(100, 100, 100); // Your existing scale
+            callback(gltf.scene);
+        },
+        (xhr) => {
+            // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        (error) => {
+            console.error('An error happened loading GLTF:', path, error);
+        }
+    );
+}
+
+/**
+ * Switches the displayed phone model and CSS object visibility.
+ */
+function togglePhoneMode() {
+    // Toggle the body class
+    body.classList.toggle('phone-open');
+    currentPhoneMode = body.classList.contains('phone-open') ? 'open' : 'closed';
+
+    // Remove current GLTF model from scene
+    if (currentPhoneGLTF) {
+        phoneGroup.remove(currentPhoneGLTF); // Remove from the group
+        // If you need to dispose of resources explicitly:
+        // currentPhoneGLTF.traverse(object => {
+        //     if (object.isMesh) {
+        //         object.geometry.dispose();
+        //         object.material.dispose();
+        //     }
+        // });
+    }
+
+    if (currentPhoneMode === 'open') {
+        console.log('Switching to OPEN mode');
+        if (openPhoneModel) {
+            phoneGroup.add(openPhoneModel); // Add to the group
+            currentPhoneGLTF = openPhoneModel;
+        }
+        wrapper.style.display = 'block'; // Show the wrapper (and iframe)
+        controls.enabled = false; // Disable OrbitControls for iframe interaction
+        
+        // Example: Animate camera to a good view for open phone if needed
+        // gsap.to(camera.position, { x: 0, y: 0, z: 100, duration: 1, ease: "power2.out" });
+
+    } else {
+        console.log('Switching to CLOSED mode');
+        if (closedPhoneModel) {
+            phoneGroup.add(closedPhoneModel); // Add to the group
+            currentPhoneGLTF = closedPhoneModel;
+        }
+        wrapper.style.display = 'none'; // HIDE the wrapper (and iframe)
+        wrapper.style.pointerEvents = "none"; // Ensure iframe is not interactive when hidden
+
+        controls.enabled = true; // Re-enable OrbitControls for closed phone
+        
+        // Example: Animate camera back to a good view for closed phone if needed
+        // gsap.to(camera.position, { x: 0, y: 0, z: 200, duration: 1, ease: "power2.out" });
+    }
+}
+
+// --- Initial Setup ---
+// Load both models once
+Promise.all([
+    new Promise(resolve => loadGLTFModel('phone_closed.glb', (model) => {
+        closedPhoneModel = model;
+        closedPhoneModel.scale.set(30, 30, 30);
+        resolve();
+    })),
+    new Promise(resolve => loadGLTFModel('phone_open.glb', (model) => {
+        openPhoneModel = model;
+        resolve();
+    }))
+]).then(() => {
+    // After both models are loaded, set initial state
+    if (body.classList.contains('phone-closed')) {
+        phoneGroup.add(closedPhoneModel);
+        currentPhoneGLTF = closedPhoneModel;
+
+        wrapper.style.display = 'none'; // Ensure iframe is hidden on start
+        wrapper.style.pointerEvents = "none"; // Ensure iframe is not interactive
+        controls.enabled = true; // Ensure controls are enabled for closed mode
+    } else {
+        phoneGroup.add(openPhoneModel);
+        currentPhoneGLTF = openPhoneModel;
+        wrapper.style.display = 'block'; // Ensure iframe is shown on start
+        controls.enabled = false; // Ensure controls are disabled for open mode
+    }
+    // Add click listener to trigger the mode switch
+    webglRenderer.domElement.addEventListener('click', togglePhoneMode);
+    console.log("Initial phone mode set:", currentPhoneMode);
+}).catch(error => {
+    console.error("Failed to load one or both phone models:", error);
+});
+
+
+
+
+// /**
+//  * Animate
+//  */
+// const clock = new THREE.Clock()
+// const vector = new THREE.Vector3()
+
+// const tick = () =>
+// {
+//     const elapsedTime = clock.getElapsedTime()
+
+//      //Update objects (rotation)
+//     //  group.rotation.y = 0.1 * elapsedTime
+    
+
+//     // Update controls
+//     controls.update()
+
+//     // Check facing direction
+//     group.getWorldDirection(vector)
+//     const dot = vector.dot(camera.getWorldDirection(new THREE.Vector3()))
+
+//     // dot < 0 means it's facing the camera
+//     if (dot < 0) {
+//         wrapper.style.pointerEvents = "auto"
+//     } else {
+//         wrapper.style.pointerEvents = "none" // facing away, disable interaction
+//     }
+
+//     // Render cube 
+//     webglRenderer.render(scene, camera)
+
+//     // Render iframe
+//     cssRenderer.render(scene, camera)
+
+//     // Call tick again on the next frame
+//     window.requestAnimationFrame(tick)
+// }
+
+// // Handle window resize
+//         window.addEventListener('resize', () => {
+//             // Update camera aspect ratio
+//             camera.aspect = window.innerWidth / window.innerHeight
+//             camera.updateProjectionMatrix()
+
+//             // Update renderer sizes
+//             webglRenderer.setSize(window.innerWidth, window.innerHeight)
+//             cssRenderer.setSize(window.innerWidth, window.innerHeight)
+//         })
+
+// tick()
 
 /**
  * Animate
  */
-const clock = new THREE.Clock()
-const vector = new THREE.Vector3()
+const clock = new THREE.Clock();
+const vector = new THREE.Vector3(); // For dot product check
 
 const tick = () =>
 {
-    const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = clock.getElapsedTime();
 
-     //Update objects (rotation)
-    //  group.rotation.y = 0.1 * elapsedTime
+    // Update controls only if enabled
+    if (controls.enabled) {
+        controls.update();
+    }
     
+    // Check facing direction for the iframe's interactivity only if phone is open
+    if (currentPhoneMode === 'open') {
+        // The dot product should check the current GLTF model, not the group itself
+        // if the group just contains the cssObject.
+        // It's probably better to check the camera's relationship to the iframe's world position.
+        // Or, more simply, if controls are enabled, allow interaction, otherwise not.
+        // Given your previous usage, let's keep it related to the *group* which contains the iframe.
+        phoneGroup.getWorldDirection(vector); // Gets the direction the group is "looking"
+        const cameraDirection = new THREE.Vector3();
+        camera.getWorldDirection(cameraDirection); // Gets the direction the camera is "looking"
 
-    // Update controls
-    controls.update()
+        const dot = vector.dot(cameraDirection);
 
-    // Check facing direction
-    group.getWorldDirection(vector)
-    const dot = vector.dot(camera.getWorldDirection(new THREE.Vector3()))
-
-    // dot < 0 means it's facing the camera
-    if (dot < 0) {
-        wrapper.style.pointerEvents = "auto"
+        // dot < 0 means the front of the group (and thus iframe) is facing the camera
+        // Note: You might need to adjust the condition (dot < 0 or dot > 0)
+        // based on the initial orientation of your GLTF models and cssObject.
+        // A small threshold can help prevent flickering at the exact boundary.
+        if (dot < -0.1) { // -0.1 for a small buffer
+            wrapper.style.pointerEvents = "auto";
+        } else {
+            wrapper.style.pointerEvents = "none"; // facing away or not fully facing, disable interaction
+        }
     } else {
-        wrapper.style.pointerEvents = "none" // facing away, disable interaction
+        // When phone is closed, always disable iframe pointer events
+        wrapper.style.pointerEvents = "none";
     }
 
-    // Render cube 
-    webglRenderer.render(scene, camera)
+    // Render WebGL scene
+    webglRenderer.render(scene, camera);
 
-    // Render iframe
-    cssRenderer.render(scene, camera)
+    // Render CSS3D scene
+    cssRenderer.render(scene, camera); // Note: CSS3DRenderer also renders using the main scene, not cssScene in your code
 
     // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
+    window.requestAnimationFrame(tick);
+};
 
 // Handle window resize
-        window.addEventListener('resize', () => {
-            // Update camera aspect ratio
-            camera.aspect = window.innerWidth / window.innerHeight
-            camera.updateProjectionMatrix()
+window.addEventListener('resize', () => {
+    // Update camera aspect ratio
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-            // Update renderer sizes
-            webglRenderer.setSize(window.innerWidth, window.innerHeight)
-            cssRenderer.setSize(window.innerWidth, window.innerHeight)
-        })
+    // Update renderer sizes
+    webglRenderer.setSize(window.innerWidth, window.innerHeight);
+    cssRenderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-tick()
-
+tick(); // Start the animation loop
 
