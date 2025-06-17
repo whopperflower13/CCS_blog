@@ -27,6 +27,8 @@
   top: 0;
   left: 0;
   z-index: 2; /* top */
+  background-color: transparent;
   pointer-events: none; /* Let events pass through */
 }
+
 

@@ -124,13 +124,13 @@ cssObject.scale.set(0.15, 0.15, 0.15)
 // const cube = new THREE.Mesh(geometry, material)
 // group.add(cube)
 
-// 3. Add the group to the scene
+// Add the group to the scene
 // scene.add(group)
 
 // Group for model and cssObject
-const phoneGroup = new THREE.Group(); // Use a descriptive name
-phoneGroup.add(cssObject); // Add cssObject to the group
-scene.add(phoneGroup); // Add the group to the scene
+const phoneGroup = new THREE.Group() // Use a descriptive name
+// phoneGroup.add(cssObject) // Add cssObject to the group
+scene.add(phoneGroup) // Add the group to the scene
 
 // --- Functions ---
 
@@ -181,6 +181,7 @@ function togglePhoneMode() {
         if (openPhoneModel) {
             phoneGroup.add(openPhoneModel); // Add to the group
             currentPhoneGLTF = openPhoneModel;
+            phoneGroup.add(cssObject)
         }
         wrapper.style.display = 'block'; // Show the wrapper (and iframe)
         controls.enabled = false; // Disable OrbitControls for iframe interaction
@@ -192,6 +193,7 @@ function togglePhoneMode() {
         console.log('Switching to CLOSED mode');
         if (closedPhoneModel) {
             phoneGroup.add(closedPhoneModel); // Add to the group
+            phoneGroup.remove(cssObject)
             currentPhoneGLTF = closedPhoneModel;
         }
         wrapper.style.display = 'none'; // HIDE the wrapper (and iframe)
@@ -309,6 +311,7 @@ const tick = () =>
     
     // Check facing direction for the iframe's interactivity only if phone is open
     if (currentPhoneMode === 'open') {
+        
         // The dot product should check the current GLTF model, not the group itself
         // if the group just contains the cssObject.
         // It's probably better to check the camera's relationship to the iframe's world position.
