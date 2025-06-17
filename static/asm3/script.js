@@ -7,11 +7,11 @@ import gsap from 'https://esm.sh/gsap@3.12.5'
 //Scene
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 1, 1000)
-camera.position.set(0, 0, 5)
+camera.position.set(0, 0, 200)
 
 //Lights
 // Ambient Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft white light
+const ambientLight = new THREE.AmbientLight(0xffffff, 2); // Soft white light
 scene.add(ambientLight);
 
 // Directional Light 
@@ -28,9 +28,9 @@ gltfLoader.load(
 {
     console.log("gltf model loaded", gltf)
     scene.add(gltf.scene)
+    //scale model
+    gltf.scene.scale.set(100, 100, 100)
 }
-        // console.log(gltf)
-        // scene.add(gltf.scene.children[0].children[0])
 ) 
 
 
@@ -76,7 +76,7 @@ controls.mouseButtons = {
 
 // Create iframe element
 const iframe = document.createElement('iframe')
-// iframe.src = "https://whopperflower13.github.io/ggsite/" // Your desired website
+iframe.src = "https://whopperflower13.github.io/ggsite/" // Your desired website
 iframe.style.width = "800px"
 iframe.style.height = "600px"
 iframe.style.border = "0"
@@ -89,10 +89,13 @@ wrapper.style.pointerEvents = "auto" // default
 wrapper.appendChild(iframe)
 
 const cssObject = new CSS3DObject(wrapper)
-cssObject.position.set(200, -150, 0)
+cssObject.position.set(65, 19, 25)
 // cssObject.rotation.y = Math.PI / 4; // Example rotation
-scene.add(cssObject)
 
+//scale down 
+cssObject.scale.set(0.15, 0.15, 0.15)
+
+scene.add(cssObject)
 
 //group
 const group = new THREE.Group()
