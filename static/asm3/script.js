@@ -1,4 +1,5 @@
 import * as THREE from "https://esm.sh/three@0.150.1"
+import { Box3, Vector3 } from "https://esm.sh/three@0.150.1"
 import { OrbitControls } from "https://esm.sh/three@0.150.1/examples/jsm/controls/OrbitControls.js"
 import { CSS3DRenderer, CSS3DObject } from "https://esm.sh/three@0.150.1/examples/jsm/renderers/CSS3DRenderer.js"
 import { GLTFLoader } from 'https://esm.sh/three@0.150.1/examples/jsm/loaders/GLTFLoader.js' 
@@ -30,8 +31,17 @@ gltfLoader.load(
     scene.add(gltf.scene)
     //scale model
     gltf.scene.scale.set(100, 100, 100)
+
+    // 1. Calculate the bounding box of the model
+    const box = new Box3().setFromObject(model);
+
+    // 2. Get the center of the bounding box
+    const center = new Vector3();
+    box.getCenter(center);
+
 }
 ) 
+
 
 
 // let foundMesh = null;
