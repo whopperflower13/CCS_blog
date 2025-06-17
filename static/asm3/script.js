@@ -34,8 +34,6 @@ gltfLoader.load(
 ) 
 
 
-
-
 // let foundMesh = null;
 // scene.traverse(function (object) {
 //     console.log("Traversing object:", object.name, object);
