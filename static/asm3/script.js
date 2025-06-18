@@ -294,6 +294,25 @@ Promise.all([
 
 
 //Audio
+const myAudio = document.getElementById('myAudio');
+  let isPlaying = false; // To keep track of music state
+
+  // Add an event listener for key presses
+  document.addEventListener('keydown', function(event) {
+    // Check if the pressed key is 'M' (key code 77)
+    if (event.key === 'm' || event.key === 'M') {
+      if (isPlaying) {
+        myAudio.pause(); // Pause the music
+        isPlaying = false;
+        console.log('Music Off');
+      } else {
+        myAudio.play(); // Play the music
+        isPlaying = true;
+        console.log('Music On');
+      }
+    }
+  });
+
 
 /**
  * Animate
