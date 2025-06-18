@@ -5,8 +5,9 @@
     
 }
 
-body{
+.phone-closed{
   background-color: black;
+  top: 0;
   height: 100vh;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -41,5 +42,3 @@ body{
   background-color: transparent;
   pointer-events: none;
 }
-
-

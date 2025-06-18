@@ -292,7 +292,50 @@ Promise.all([
 //             cssRenderer.setSize(window.innerWidth, window.innerHeight)
 //         })
 
-// tick()
+
+//Audio
+// Get references to the audio element and the button
+        const backgroundAudio = document.getElementById('backgroundAudio');
+        const toggleAudioButton = document.getElementById('toggleAudioButton');
+
+        let isPlaying = false; // Track current audio state
+
+// Function to toggle audio play/pause
+        function toggleAudio() {
+            try {
+                if (isPlaying) {
+                    backgroundAudio.pause();
+                    toggleAudioButton.textContent = 'Play Music';
+                    isPlaying = false;
+                    showMessage('Music Paused', 'success');
+                } else {
+                    // Attempt to play and unmute
+                    backgroundAudio.muted = false; // Unmute the audio
+                    backgroundAudio.play()
+                        .then(() => {
+                            toggleAudioButton.textContent = 'Pause Music';
+                            isPlaying = true;
+                            showMessage('Music Playing', 'success');
+                        })
+                        .catch(error => {
+                            // Handle cases where play() might fail (e.g., autoplay policies)
+                            console.error('Error playing audio:', error);
+                            showMessage('Failed to play music. Please try again.', 'error');
+                            // If play fails, ensure the button state reflects reality
+                            backgroundAudio.muted = true; // Mute it back if it failed to play
+                            isPlaying = false; // Mark as not playing
+                            toggleAudioButton.textContent = 'Play Music';
+                        });
+                }
+            } catch (error) {
+                console.error('An error occurred during audio toggle:', error);
+                showMessage('An unexpected error occurred.', 'error');
+            }
+        }
+
+        // Add event listener to the button
+        toggleAudioButton.addEventListener('click', toggleAudio);
+
 
 /**
  * Animate
