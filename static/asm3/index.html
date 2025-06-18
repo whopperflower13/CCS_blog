@@ -13,20 +13,19 @@
 <p>Press the 'M' key to toggle music on/off.</p>
     
     <script src="https://cdn.jsdelivr.net/npm/hydra-synth/dist/hydra-synth.js"></script>
-<script id="hydra-canvas">
+<!-- <script>
       // create a new hydra-synth instance
       var hydra = new Hydra({ detectAudio: false })
-    s0.initImage("https://i.ibb.co/Q3v9JK9F/nyc.jpg")
-// s0.initImage("https://i.ibb.co/97tjxdV/GG-image.png")
-// s0.initImage("https://i.ibb.co/8nczmL80/blair.jpg")
-// s0.initImage("https://i.ibb.co/3mhkjMxt/GG.jpg")
-
-osc(6, 0.1).thresh(0.2, 0).modulate(src(s0).scale(1, 9 / 16).sub(gradient()),1).invert().out(o1)
-
-osc(2,0.1,({time}) => Math.sin(time/10) * 10).layer(
-src(s0).scale(1, 9 / 16)
-.invert().luma().invert()).mask(o1).out(o0)
-</script>
+      osc(5, 0.9, 0.001)
+    .kaleid([3,4,5,7,8,9,10].fast(0.1))
+    .color(0.5, 0.3)
+    .colorama(0.4)
+    .rotate(0.009,()=>Math.sin(time)* -0.001 )
+    .modulateRotate(o0,()=>Math.sin(time) * 0.003)
+    .modulate(o0, 0.9)
+    .scale(0.9)
+    .out(o0)
+</script> -->
 
     <script type="module" src="./script.js"></script>
     

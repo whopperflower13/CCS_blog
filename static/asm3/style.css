@@ -2,6 +2,7 @@
 {
     margin: 0;
     padding: 0;
+<<<<<<< HEAD
     
 }
 
@@ -11,17 +12,16 @@
   height: 100vh;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+=======
+>>>>>>> parent of fed593b (visuals done!)
 }
 
 #hydra-canvas {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: 0; /* back layer */
   pointer-events: none; /* so it doesn’t block clicks */
-  background-color: black;
-  overflow: hidden;
 }
 
 .webgl-canvas {
@@ -30,15 +30,15 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 1; 
-            pointer-events: auto;
+            z-index: 1; /* Ensure WebGL canvas is above CSS3D canvas for controls */
+            pointer-events: auto; /* Always allow pointer events on WebGL canvas for OrbitControls */
         }
 
 .css3d-canvas {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2; 
+  z-index: 2; /* top */
   background-color: transparent;
-  pointer-events: none;
+  pointer-events: none; /* Let events pass through */
 }
