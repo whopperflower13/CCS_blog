@@ -2,14 +2,25 @@
 {
     margin: 0;
     padding: 0;
+    
+}
+
+body{
+  background-color: black;
+  height: 100vh;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 #hydra-canvas {
-  position: fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 0; /* back layer */
   pointer-events: none; /* so it doesn’t block clicks */
+  background-color: black;
+  overflow: hidden;
 }
 
 .webgl-canvas {
@@ -18,17 +29,17 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 1; /* Ensure WebGL canvas is above CSS3D canvas for controls */
-            pointer-events: auto; /* Always allow pointer events on WebGL canvas for OrbitControls */
+            z-index: 1; 
+            pointer-events: auto;
         }
 
 .css3d-canvas {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2; /* top */
+  z-index: 2; 
   background-color: transparent;
-  pointer-events: none; /* Let events pass through */
+  pointer-events: none;
 }
 
 
