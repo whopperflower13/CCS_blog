@@ -5,7 +5,6 @@ snippet:
 disable_html_sanitization: true
 allow_math: true
 ---
+<a href="../asm3/index.html">full screen</a>
+<iframe src="/asm3/index.html" width="120%" height="800px" style="border: none;"></iframe>
 
-<iframe src="/asm3/index.html" width="120%" height="1000px" style="border: none;"></iframe>
-
-<a href="../static/asm3/index.html">full screen</a>
