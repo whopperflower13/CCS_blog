@@ -6,5 +6,4 @@ disable_html_sanitization: true
 allow_math: true
 ---
 
-insert here:
-<iframe src="/asm3/index.html" width="window-width" height="window-height" style="border: none;"></iframe>
+<iframe src="/asm3/index.html" width="120%" height="1000px" style="border: none;"></iframe>
